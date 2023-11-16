@@ -1,6 +1,5 @@
 import { fetchImages } from 'api';
 import { Component } from 'react';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import toast, { Toaster } from 'react-hot-toast';
 import { Container } from './Container';
 import { Searchbar } from './Searchbar/Searchbar';
@@ -33,7 +32,7 @@ export class App extends Component {
         const initialImages = await fetchImages(additionalParams);
 
         if (additionalParams.q === '' || initialImages.total === 0) {
-          Notify.failure(
+          toast.error(
             'Sorry, there are no images matching your search query. Please try again.'
           );
           this.setState({ loadMore: false });
@@ -81,7 +80,7 @@ export class App extends Component {
         {images.length > 0 && <ImageGallery images={this.state.images} />}
         {loading && <Loader />}
         {loadMore && <Button loadMore={this.handleLoadMore} />}
-        <Toaster />
+        <Toaster position="top-right"/>
       </Container>
     );
   }
