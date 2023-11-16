@@ -23,25 +23,23 @@ export class App extends Component {
       prevState.page !== this.state.page
     ) {
       try {
-        this.setState({ loading: true });
+        this.setState({ loading: true, loadMore: false });
         const additionalParams = {
           q: this.state.query.split('/').pop(),
           page: this.state.page,
           per_page: 12,
         };
         const initialImages = await fetchImages(additionalParams);
-
         if (additionalParams.q === '' || initialImages.total === 0) {
           toast.error(
             'Sorry, there are no images matching your search query. Please try again.'
           );
-          this.setState({ loadMore: false });
           return;
         } else {
           this.setState(prevState => ({
             images: [...prevState.images, ...initialImages.hits],
           }));
-          this.setState({ error: false, loadMore: false });
+          this.setState({ error: false, loadMore: true });
         }
       } catch (error) {
         toast.error('Please try reloading this page');
@@ -50,9 +48,7 @@ export class App extends Component {
         this.setState({ loading: false });
       }
     }
-    if (this.state.images.length > 0) {
-      this.setState({ loadMore: true });
-    }
+
   }
 
   addQuery = newQuery => {
