@@ -8,15 +8,13 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 
-
-
 export class App extends Component {
   state = {
     images: [],
     query: '',
     page: 1,
     loading: false,
-    error: false,
+    error: true,
     loadMore: false,
   };
 
@@ -26,12 +24,14 @@ export class App extends Component {
       prevState.page !== this.state.page
     ) {
       try {
+        this.setState({ loading: true });
         const additionalParams = {
           q: this.state.query.split('/').pop(),
           page: this.state.page,
           per_page: 12,
         };
         const initialImages = await fetchImages(additionalParams);
+
         if (additionalParams.q === '' || initialImages.total === 0) {
           Notify.failure(
             'Sorry, there are no images matching your search query. Please try again.'
@@ -39,10 +39,10 @@ export class App extends Component {
           this.setState({ loadMore: false });
           return;
         } else {
-          this.setState({ loading: true, error: false, loadMore: false });
           this.setState(prevState => ({
             images: [...prevState.images, ...initialImages.hits],
           }));
+          this.setState({ error: false, loadMore: false });
         }
       } catch (error) {
         toast.error('Please try reloading this page');

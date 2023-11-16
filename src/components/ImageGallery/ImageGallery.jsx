@@ -4,7 +4,9 @@ import { ImageGalleryItem } from '../ImageGalleryItem/ImageGalleryItem';
 export const ImageGallery = ({ images }) => {
   return (
     <ImageGalleryWrapper>
-      <ImageGalleryItem images={images} />
+      {images.map(image => (
+        <ImageGalleryItem image={image} key={image.id} />
+      ))}
     </ImageGalleryWrapper>
   );
 };
