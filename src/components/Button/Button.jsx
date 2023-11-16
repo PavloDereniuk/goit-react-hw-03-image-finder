@@ -1,5 +1,5 @@
 import { ButtonWrapper } from './Button.styled';
 
-export const Button = () => {
-  return <ButtonWrapper>Load More</ButtonWrapper>;
+export const Button = ({ loadMore }) => {
+  return <ButtonWrapper onClick={loadMore} >Load More</ButtonWrapper>;
 };

@@ -1,5 +1,6 @@
 import { ImageGalleryItemWrapper } from './ImageGalleryItem.styled';
 
+
 export const ImageGalleryItem = images => {
   const date = images.images;
 
