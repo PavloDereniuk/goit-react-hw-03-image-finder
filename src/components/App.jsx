@@ -25,7 +25,7 @@ export class App extends Component {
       try {
         this.setState({ loading: true, loadMore: false });
         const additionalParams = {
-          q: this.state.query.split('/').pop(),
+          q: this.state.query.split('/').pop().trim(),
           page: this.state.page,
           per_page: 12,
         };
